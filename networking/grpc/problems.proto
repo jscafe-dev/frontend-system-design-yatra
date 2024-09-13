@@ -1,0 +1,18 @@
+syntax = "proto3";
+
+message Problem {
+    string id = 1;
+    string title = 2;
+    string description = 3;
+}
+
+service ProblemService {
+    rpc GetAllProblems (Empty) returns (ProblemList) {}
+    rpc UpdateProblem (Problem) returns (Problem) {}
+}
+
+message Empty {}
+
+message ProblemList {
+    repeated Problem problems = 1;
+}
