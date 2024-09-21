@@ -2,9 +2,13 @@ import express from "express";
 import { initTRPC } from "@trpc/server";
 import { createExpressMiddleware } from "@trpc/server/adapters/express";
 import cors from "cors";
-// You can use any variable name you like.
-// We use t to keep things simple.
+
+const app = express();
+const port = process.env.PORT || 3000;
 const t = initTRPC.create();
+
+export const router = t.router;
+export const publicProcedure = t.procedure;
 
 let problems = [
   {
@@ -19,20 +23,14 @@ let problems = [
   },
 ];
 
-export const router = t.router;
-export const publicProcedure = t.procedure;
-
-const app = express();
-app.use(cors());
-const port = process.env.PORT || 3000;
-
-interface Problem {
+type Problem = {
   id: number;
   title: string;
   description: string;
-}
+};
 
 const appRouter = router({
+  greeting: publicProcedure.query(() => "hello tRPC v10!"),
   getAllProblems: publicProcedure.query(() => problems),
   updateProblems: publicProcedure
     .input((v) => {
@@ -50,7 +48,7 @@ const appRouter = router({
       });
     }),
 });
-
+app.use(cors());
 app.use(
   "/trpc",
   createExpressMiddleware({

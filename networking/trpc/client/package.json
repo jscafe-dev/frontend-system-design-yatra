@@ -13,6 +13,7 @@
     "vite": "^5.4.1"
   },
   "dependencies": {
-    "@trpc/client": "^10.45.2"
+    "@trpc/client": "^11.0.0-rc.522",
+    "@trpc/server": "^11.0.0-rc.522"
   }
 }
